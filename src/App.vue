@@ -1,60 +1,66 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+    <v-navigation-drawer fixed absolute temporary v-model="sideNav" color ="light-green lighten-3">
+      <v-list nav dense>
+        <v-list-item-group
+                active-class="border" color="light-green darken-4">
+          <v-list-item v-for="item in menuItems" :key="item.title">
+            <v-list-item-action>
+              <v-icon>{{item.icon}}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>{{item.title}}</v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
 
-      <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
+    </v-navigation-drawer>
+    <div>
+      <v-toolbar
+              color ="light-green lighten-4"
+              dense>
+        <v-app-bar-nav-icon
+                @click.native.stop ="sideNav = !sideNav"
+                class="hidden-sm-and-up"
+        ></v-app-bar-nav-icon>
+        <v-toolbar-title>Meetings Manager</v-toolbar-title>
+        <v-spacer></v-spacer>
 
-    <v-content>
-      <HelloWorld/>
-    </v-content>
+        <v-toolbar-items class="hidden-xs-only">
+          <v-btn text v-for="item in menuItems" :key="item.title">
+            <v-icon left dark>{{item.icon}}</v-icon>
+            {{item.title}}
+          </v-btn>
+        </v-toolbar-items>
+      </v-toolbar>
+    </div>
+    <main>
+      <router-view></router-view>
+    </main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
 
-export default {
-  name: 'App',
 
-  components: {
-    HelloWorld,
-  },
+  export default {
+    name: 'App',
 
-  data: () => ({
-    //
-  }),
-};
+    components: {
+      //
+    },
+
+    data: () => ({
+      sideNav: false,
+
+      menuItems: [
+        {icon: 'mdi-calendar', title: 'View meetings'},
+        {icon: 'mdi-map-marker-outline', title: 'Organize meeting'},
+        {icon: 'mdi-account', title: 'Profile'},
+        {icon: 'mdi-face', title: 'Sign up'},
+        {icon: 'mdi-pen-plus', title: 'Sign in'},
+      ]
+    }),
+  };
 </script>

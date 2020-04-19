@@ -20,7 +20,7 @@
     </v-navigation-drawer>
     <div>
       <v-toolbar
-              color ="light-green lighten-4"
+              color ="lime darken-2"
               dense>
         <v-app-bar-nav-icon
                 @click.stop ="sideNav = !sideNav"

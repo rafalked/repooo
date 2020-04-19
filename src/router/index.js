@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import home from '@/components/home'
-import Meeting from '@/components/Meetings/Meeting'
+import Meetings from '@/components/Meetings/Meeting'
 import CreateMeeting from '@/components/Meetings/CreateMeeting'
 import Profile from '@/components/User/Profile'
 import Signup from '@/components/User/Signup'
 import Signin from '@/components/User/Signin'
+import Meetingg from '@/components/Meetings/Meetingg'
 
 
 
@@ -24,12 +25,17 @@ export default new VueRouter({
     {
       path: '/meetings',
       name: 'Meeting',
-      component: Meeting
+      component: Meetings
     },
     {
       path: '/createMeeting',
       name: 'CreateMeeting',
       component: CreateMeeting
+    },
+    {
+      path: '/meetings/:id',
+      name: 'Meeting',
+      component: Meetingg
     },
     {
       path: '/profile',

@@ -1,33 +1,31 @@
 <template>
     <v-container>
         <v-layout row wrap>
-            <v-flex xs12 sm10 md8 offset-sm1 offset-md2 >
-                <v-card color="lime lighten-4">
-                    <v-container fluid>
+            <v-flex xs12>
+                <v-card>
+                    <v-card-title>
+                        <h3>My Meeting</h3>
+                    </v-card-title>
                     <v-img
                             class="white--text align-end"
                             height="200px"
                             src="https://lovecoffee.pl/public/manager/images/blog/kawa-zapaorzna-przez-bariste.jpg"
                     >
-                        <v-card-title>Cafe</v-card-title>
                     </v-img>
-
-                    <v-card-text class="text--primary">
-                        <div>Starbucks</div>
-
-                        <div>Galeria Krakowska, 26.04.2020, godz. 17.00</div>
+                    <v-card-text>
+                        <div>26.04.2020</div>
+                        <div>Tu będzie tekst opisujący spotkanie</div>
                     </v-card-text>
 
                     <v-card-actions>
+                        <v-spacer></v-spacer>
                         <v-btn
                                 color="orange"
                                 text
-                                to="/Meetings/1"
                         >
-                            View meeting
+                            Register
                         </v-btn>
                     </v-card-actions>
-                    </v-container>
                 </v-card>
             </v-flex>
         </v-layout>
@@ -36,7 +34,7 @@
 
 <script>
     export default {
-
+        name: "Meetingg"
     }
 </script>
 

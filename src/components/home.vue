@@ -30,18 +30,14 @@
 
 <script>
     export default {
-        data(){
-            return{
-                meetings: [
-                    {imageUrl: 'https://lovecoffee.pl/public/manager/images/blog/kawa-zapaorzna-przez-bariste.jpg', id: 'SDd', title: 'Cafe?'},
-                    {imageUrl: 'https://www.wroclaw.pl/files/cmsdocuments/9069189/sport.jpg', id: 'SDd1', title: 'Sport?'},
-                    {imageUrl: 'https://assets.biggreenegg.eu/app/uploads/2018/06/28115815/topimage-pizza-special17-800x500.jpg', id: 'SDd2', title: 'Pizza?'},
-                ]
+        computed: {
+            meetings: function () {
+                return this.$store.getters.featuredMeetings
             }
         },
         methods: {
             onLoadMeeting(id){
-                this.$router.push('/meetings' + id);
+                this.$router.push('/meetings/' + id);
 
             }
         }

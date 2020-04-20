@@ -1,28 +1,26 @@
 <template>
     <v-container>
-        <v-layout row wrap>
+        <v-layout row wrap v-for ="meeting in meetings" :key ="meeting.id" class="mb-3">
             <v-flex xs12 sm10 md8 offset-sm1 offset-md2 >
                 <v-card color="lime lighten-4">
                     <v-container fluid>
                     <v-img
                             class="white--text align-end"
                             height="200px"
-                            src="https://lovecoffee.pl/public/manager/images/blog/kawa-zapaorzna-przez-bariste.jpg"
+                            :src="meeting.imageUrl"
                     >
-                        <v-card-title>Cafe</v-card-title>
+                        <v-card-title>{{meeting.title}}</v-card-title>
                     </v-img>
 
                     <v-card-text class="text--primary">
-                        <div>Starbucks</div>
-
-                        <div>Galeria Krakowska, 26.04.2020, godz. 17.00</div>
+                        <div>{{meeting.date}}</div>
                     </v-card-text>
 
                     <v-card-actions>
                         <v-btn
                                 color="orange"
                                 text
-                                to="/Meetings/1"
+                                :to="'/Meetings/' + meeting.id"
                         >
                             View meeting
                         </v-btn>
@@ -36,7 +34,11 @@
 
 <script>
     export default {
-
+        computed: {
+            meetings(){
+                return this.$store.getters.loadedMeetings
+            }
+        }
     }
 </script>
 

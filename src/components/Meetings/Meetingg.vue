@@ -4,16 +4,16 @@
             <v-flex xs12>
                 <v-card>
                     <v-card-title>
-                        <h3>My Meeting</h3>
+                        <h3>{{meeting.title}}</h3>
                     </v-card-title>
                     <v-img
                             class="white--text align-end"
                             height="200px"
-                            src="https://lovecoffee.pl/public/manager/images/blog/kawa-zapaorzna-przez-bariste.jpg"
+                            :src="meeting.imageUrl"
                     >
                     </v-img>
                     <v-card-text>
-                        <div>26.04.2020</div>
+                        <div>{{meeting.date}}</div>
                         <div>Tu będzie tekst opisujący spotkanie</div>
                     </v-card-text>
 
@@ -31,13 +31,13 @@
         </v-layout>
     </v-container>
 </template>
-
 <script>
-    export default {
-        name: "Meetingg"
+    export default{
+        props: ['id'],
+        computed: {
+            meeting: function () {
+                return this.$store.getters.loadedMeeting(this.id)
+            }
+        }
     }
 </script>
-
-<style scoped>
-
-</style>

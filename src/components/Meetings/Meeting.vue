@@ -13,7 +13,7 @@
                     </v-img>
 
                     <v-card-text class="text--primary">
-                        <div>{{meeting.date}}</div>
+                        <div>{{meeting.date | date}}</div>
                     </v-card-text>
 
                     <v-card-actions>

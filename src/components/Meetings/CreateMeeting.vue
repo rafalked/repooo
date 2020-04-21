@@ -36,6 +36,21 @@
                     </v-layout>
                     <v-layout row>
                         <v-flex xs12 sm6 offset-sm3>
+                            <h4>Choose a Date & Time</h4>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row class="mb-4">
+                        <v-flex xs12 sm6 offset-sm3>
+                            <v-date-picker v-model="date"></v-date-picker>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row>
+                        <v-flex xs12 sm6 offset-sm3>
+                            <v-time-picker v-model="time"></v-time-picker>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row>
+                        <v-flex xs12 sm6 offset-sm3>
                             <v-btn :disabled="!formIsValid" type="submit">
                                 Create meeting
                             </v-btn>
@@ -47,6 +62,7 @@
     </v-container>
 </template>
 <script>
+    import moment from 'moment'
     export default{
         data (){
             return{
@@ -54,7 +70,14 @@
                 location:'',
                 imageUrl:'',
                 description:'',
+                date: new Date(),
+                time: new Date(),
             }
+        },
+        created: function () {
+            const dateTime = moment()
+            this.date = dateTime.format('YYYY-MM-DD')
+            this.time = dateTime.format('HH:mm')
         },
         computed: {
             formIsValid () {
@@ -62,8 +85,22 @@
                     this.location !== '' &&
                     this.imageUrl !== '' &&
                     this.description !== ''
+            },
+            submittableDateTime () {
+                const date = new Date(this.date)
+                if (typeof this.time === 'string'){
+                    const hours = this.time.match(/^(\d+)/)[1]
+                    const minutes = this.time.match(/:(\d+)/)[1]
+                    date.setHours(hours)
+                    date.setMinutes(minutes)}
+                    else {
+                    date.setHours(this.time.getHours())
+                    date.setMinutes(this.time.getMinutes())
+                     }
+                return date
             }
         },
+
         methods: {
             onCreateMeeting() {
                 if (!this.formIsValid){
@@ -74,7 +111,7 @@
                     location: this.location,
                     imageUrl: this.imageUrl,
                     description: this.description,
-                    date: new Date()
+                    date: this.submittableDateTime
                 }
                 this.$store.dispatch('createMeeting', meetingData)
                 this.$router.push('/meetings')

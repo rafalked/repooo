@@ -13,8 +13,8 @@
                     >
                     </v-img>
                     <v-card-text>
-                        <div>{{meeting.date}}</div>
-                        <div>Tu będzie tekst opisujący spotkanie</div>
+                        <div>{{meeting.date | date}} - {{meeting.location}}</div>
+                        <div>{{meeting.description}}</div>
                     </v-card-text>
 
                     <v-card-actions>

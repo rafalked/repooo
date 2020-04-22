@@ -56,15 +56,26 @@
     },
 
     data: () => ({
-      sideNav: false,
-
-      menuItems: [
-        {icon: 'mdi-calendar', title: 'View meetings', link: '/meetings'},
-        {icon: 'mdi-map-marker-outline', title: 'Organize meeting', link: '/createMeeting'},
-        {icon: 'mdi-account', title: 'Profile', link: '/profile'},
-        {icon: 'mdi-face', title: 'Sign up', link: '/signup'},
-        {icon: 'mdi-pen-plus', title: 'Sign in', link: '/signin'},
-      ]
+      sideNav: false
     }),
+    computed:{
+      menuItems(){
+        let menuItems = [
+            {icon: 'mdi-face', title: 'Sign up', link: '/signup'},
+            {icon: 'mdi-pen-plus', title: 'Sign in', link: '/signin'},
+                ]
+        if (this.userIsAuthenticated) {
+          menuItems = [
+              {icon: 'mdi-calendar', title: 'View meetings', link: '/meetings'},
+              {icon: 'mdi-map-marker-outline', title: 'Organize meeting', link: '/createMeeting'},
+              {icon: 'mdi-account', title: 'Profile', link: '/profile'},
+          ]
+        }
+        return menuItems
+      },
+      userIsAuthenticated(){
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      }
+    }
   };
 </script>

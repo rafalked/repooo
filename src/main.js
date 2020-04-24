@@ -6,10 +6,12 @@ import router from './router'
 import {store} from './store'
 import DateFilter from './filter/date'
 import AlertCmp from './components/shared/alert.vue'
+import EditMeetingDetailsDialog from "./components/Meetings/Edit/EditMeetingDetailsDialog"
 
 Vue.config.productionTip = false
 Vue.filter('date', DateFilter)
 Vue.component('app-alert', AlertCmp)
+Vue.component('app-edit-meeting-details-dialog', EditMeetingDetailsDialog)
 
 new Vue({
   vuetify,
@@ -24,5 +26,11 @@ new Vue({
       projectId: 'meetingsmanager-c33a9',
       storageBucket: 'meetingsmanager-c33a9.appspot.com',
     })
+    firebase.auth().onAuthStateChanged((user)=> {
+      if (user){
+        this.$store.dispatch('autoSignIn', user)
+      }
+    })
+    this.$store.dispatch('loadMeetings')
   }
 }).$mount('#app')

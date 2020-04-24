@@ -20,7 +20,7 @@
                         <v-btn
                                 color="orange"
                                 text
-                                :to="'/Meetings/' + meeting.id"
+                                :to="'/meetings/' + meeting.id"
                         >
                             View meeting
                         </v-btn>

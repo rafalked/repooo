@@ -34,6 +34,9 @@ export const store = new Vuex.Store({
         error: null,
     },
     mutations: {
+        setLoadedMeeting(state, payload){
+          state.loadedMeetings = payload
+        },
         createMeeting (state, payload){
             state.loadedMeetings.push(payload)
            },
@@ -48,21 +51,80 @@ export const store = new Vuex.Store({
         },
         clearError(state){
             state.error = null
+        },
+        setCreatedMeetingKey (state, payload) {
+            state.createdMeetingKey = payload
         }
 
         },
     actions: {
-        createMeeting ({commit}, payload){
+        loadMeetings({commit}){
+            commit('setLoading', true)
+            firebase.database().ref('meetings').once('value')
+                .then((data)=>{
+                    const meetings =[]
+                    const obj = data.val()
+                    for(let key in obj){
+                        meetings.push({
+                            id: key,
+                            title: obj[key].title,
+                            description: obj[key].description,
+                            imageUrl: obj[key].imageUrl,
+                            date: obj[key].date,
+                            location: obj[key].location,
+                            creatorID: obj[key].creatorID
+                        })
+                    }
+                    commit('setLoadedMeeting', meetings)
+                    commit('setLoading', false)
+                })
+                .catch((error)=>{
+                    console.log(error)
+                    commit('setLoading', false)
+            })
+        },
+        createMeeting ({commit, getters}, payload){
             const meeting = {
                 title: payload.title,
                 location: payload.location,
-                imageUrl: payload.imageUrl,
                 description: payload.description,
-                date: payload.date,
-                id: 'asdasda'
+                date: payload.date.toISOString(),
+                creatorID: getters.user.id,
+                createdMeetingKey: '',
             }
+            let imageUrl
+            let key
+            firebase.database().ref('meetings').push(meeting)
+                .then((data)=>{
+                  const key = data.key
+                    return key
+                })
+                .then(key=>{
+                    const filename = payload.image.name
+                    const ext = filename.slice(filename.lastIndexOf('.'))
+                    commit('setCreatedMeetingKey', key)
+                    return firebase.storage().ref('meetings/' + key + '.' + ext).put(payload.image)
+                })
+                .then(fileData => {
+                    let fullPath = fileData.metadata.fullPath
+                    return firebase.storage().ref(fullPath).getDownloadURL()
+                })
+                .then(URL => {
+                    imageUrl = URL
+                    key = getters.createdMeetingKey
+                    return firebase.database().ref('meetings').child(key).update({imageUrl: imageUrl})
+                })
+                .then(()=>{
+                    commit('createMeeting', {
+                        ...meeting,
+                        imageUrl: imageUrl,
+                        id: key
+                     })
+                })
+                .catch((error)=>{
+                    console.log(error)
+            })
             //reach out to firebase and store it
-            commit('createMeeting', meeting)
         },
         signUserUp({commit}, payload){
             commit('setLoading', true)
@@ -108,6 +170,13 @@ export const store = new Vuex.Store({
                     }
                 )
         },
+        autoSignIn({commit}, payload){
+            commit('setUser', {id: payload.uid, registeredMeetings: []})
+        },
+        logout({commit}){
+            firebase.auth().signOut()
+            commit('setUser', null)
+        },
         clearError({commit}){
             commit('clearError')
         }
@@ -136,6 +205,9 @@ export const store = new Vuex.Store({
         },
         error(state){
             return state.error
+        },
+        createdMeetingKey (state) {
+            return state.createdMeetingKey
         }
 
     }

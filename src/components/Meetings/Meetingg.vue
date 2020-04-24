@@ -19,6 +19,9 @@
 
                     <v-card-actions>
                         <v-spacer></v-spacer>
+                        <template v-if ="userIsCreator">
+                            <app-edit-meeting-details-dialog></app-edit-meeting-details-dialog>
+                        </template>
                         <v-btn
                                 color="orange"
                                 text
@@ -37,6 +40,15 @@
         computed: {
             meeting: function () {
                 return this.$store.getters.loadedMeeting(this.id)
+            },
+            userIsAuthenticated () {
+                return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+            },
+            userIsCreator(){
+                if (!this.userIsAuthenticated){
+                    return false
+                }
+                return this.$store.getters.user.id === this.meeting.creatorID
             }
         }
     }

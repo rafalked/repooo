@@ -5,10 +5,17 @@
                 <v-btn large router to ="/meetings" color="lime lighten-4">Explore Meetings</v-btn>
             </v-flex>
             <v-flex xs12 sm6 class="text-center text-sm-left">
-                <v-btn large router to ="/Meetings/CreateMeeting" color="lime lighten-4">Organize Meeting</v-btn>
+                <v-btn large router to ="createMeeting" color="lime lighten-4">Organize Meeting</v-btn>
             </v-flex>
         </v-layout>
-        <v-layout row wrap class="mt-2">
+        <v-layout>
+            <v-flex xs12 class ="loadingCircle">
+                <v-progress-circular indeterminate color="lime" :width="7" :size="70" v-if="loading">
+
+                </v-progress-circular>
+            </v-flex>
+        </v-layout>
+        <v-layout row wrap class="mt-2" v-if="!loading">
             <v-flex xs12>
                 <v-carousel style="cursor:pointer">
                     <v-carousel-item
@@ -33,7 +40,11 @@
         computed: {
             meetings: function () {
                 return this.$store.getters.featuredMeetings
+            },
+            loading: function() {
+                return this.$store.getters.loading
             }
+
         },
         methods: {
             onLoadMeeting(id){
@@ -52,6 +63,9 @@
         color: white;
         font-size: 2em;
         padding: 20px;
+        text-align: center;
+    }
+    .loadingCircle{
         text-align: center;
     }
 </style>

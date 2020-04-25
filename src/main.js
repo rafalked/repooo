@@ -7,11 +7,15 @@ import {store} from './store'
 import DateFilter from './filter/date'
 import AlertCmp from './components/shared/alert.vue'
 import EditMeetingDetailsDialog from "./components/Meetings/Edit/EditMeetingDetailsDialog"
+import EditMeetingDateDialog from "./components/Meetings/Edit/EditMeetingDateDialog";
+import EditMeetingTimeDialog from "./components/Meetings/Edit/EditMeetingTimeDialog";
 
 Vue.config.productionTip = false
 Vue.filter('date', DateFilter)
 Vue.component('app-alert', AlertCmp)
 Vue.component('app-edit-meeting-details-dialog', EditMeetingDetailsDialog)
+Vue.component('app-edit-meeting-date-dialog', EditMeetingDateDialog)
+Vue.component('app-edit-meeting-time-dialog', EditMeetingTimeDialog)
 
 new Vue({
   vuetify,

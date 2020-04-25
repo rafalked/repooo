@@ -1,6 +1,13 @@
 <template>
     <v-container>
-        <v-layout row wrap>
+        <v-layout row wrap v-if="loading">
+            <v-flex xs12 class ="loadingCircle">
+                <v-progress-circular indeterminate color="lime" :width="7" :size="70" v-if="loading">
+
+                </v-progress-circular>
+            </v-flex>
+        </v-layout>
+        <v-layout row wrap v-else>
             <v-flex xs12>
                 <v-card>
                     <v-card-title>
@@ -14,13 +21,25 @@
                     </v-img>
                     <v-card-text>
                         <div>{{meeting.date | date}} - {{meeting.location}}</div>
+                        <div>
+                            <app-edit-meeting-date-dialog
+                                    :meeting="meeting"
+                                    v-if="userIsCreator">
+
+                            </app-edit-meeting-date-dialog>
+                            <app-edit-meeting-time-dialog
+                                    :meeting="meeting"
+                                    v-if="userIsCreator">
+
+                            </app-edit-meeting-time-dialog>
+                        </div>
                         <div>{{meeting.description}}</div>
                     </v-card-text>
 
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <template v-if ="userIsCreator">
-                            <app-edit-meeting-details-dialog></app-edit-meeting-details-dialog>
+                            <app-edit-meeting-details-dialog :meeting="meeting"></app-edit-meeting-details-dialog>
                         </template>
                         <v-btn
                                 color="orange"
@@ -49,6 +68,9 @@
                     return false
                 }
                 return this.$store.getters.user.id === this.meeting.creatorID
+            },
+            loading: function() {
+                return this.$store.getters.loading
             }
         }
     }

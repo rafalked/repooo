@@ -81,6 +81,7 @@
               {icon: 'mdi-calendar', title: 'View meetings', link: '/meetings'},
               {icon: 'mdi-map-marker-outline', title: 'Organize meeting', link: '/createMeeting'},
               {icon: 'mdi-account', title: 'Profile', link: '/profile'},
+              {icon: 'mdi-google-maps', title: 'Map', link: '/map'},
           ]
         }
         return menuItems

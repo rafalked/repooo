@@ -8,6 +8,8 @@ import Signup from '../components/User/Signup'
 import Signin from '../components/User/Signin'
 import Meetingg from '../components/Meetings/Meetingg'
 import AuthGuard from './auth-guard'
+import Map from '../components/Map/map'
+
 
 
 
@@ -56,6 +58,11 @@ export default new VueRouter({
       name: 'Sign in',
       component: Signin
     },
+    {
+    path: '/map',
+    name: 'Map',
+    component: Map
+  },
   ],
   mode: 'history'
 })

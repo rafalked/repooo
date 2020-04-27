@@ -41,12 +41,8 @@
                         <template v-if ="userIsCreator">
                             <app-edit-meeting-details-dialog :meeting="meeting"></app-edit-meeting-details-dialog>
                         </template>
-                        <v-btn
-                                color="orange"
-                                text
-                        >
-                            Register
-                        </v-btn>
+                        <app-meeting-register-dialog :meetingId ="meeting.id" v-if = "userIsAuthenticated && userIsCreator"
+                        ></app-meeting-register-dialog>
                     </v-card-actions>
                 </v-card>
             </v-flex>

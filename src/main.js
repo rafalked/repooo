@@ -21,7 +21,7 @@ Vue.component('app-edit-meeting-time-dialog', EditMeetingTimeDialog)
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: "AIzaSyBgXIx-n0nMHD6c5sXSl4b3V2QD6BX0MfI",
+    key: "",
     libraries: "places",
     v: 3.38// necessary for places input
   }
